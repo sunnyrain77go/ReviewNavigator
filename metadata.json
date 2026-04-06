@@ -1,0 +1,5 @@
+{
+  "name": "開發《復盤寫作術》專屬網頁引導工具",
+  "description": "一個引導個人進行結構化復盤寫作的導航工具，支持多種復盤方法（PAR, ORID, AAR等）並提供即時預覽與複製功能。",
+  "requestFramePermissions": []
+}
