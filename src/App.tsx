@@ -103,8 +103,16 @@ export default function App() {
     setInputs(prev => ({ ...prev, [id]: value }));
   };
 
+  // 檢查是否有 API Key
+  const hasApiKey = !!process.env.GEMINI_API_KEY;
+
   // AI 智慧修飾功能
   const handleAiPolish = async () => {
+    if (!hasApiKey) {
+      alert("目前未設定 Gemini API Key，無法使用 AI 功能。您可以複製下方的 Prompt 到其他 AI 平台使用！");
+      return;
+    }
+    
     if (Object.values(inputs).filter(v => v.trim()).length === 0) {
       alert("請先輸入一些內容再讓 AI 幫你修飾喔！");
       return;
@@ -349,13 +357,15 @@ ${contentString}
                 onClick={handleAiPolish}
                 disabled={isAiLoading}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg ${
-                  isAiLoading 
-                    ? 'bg-blue-100 text-blue-400 cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95'
+                  !hasApiKey
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
+                    : isAiLoading 
+                      ? 'bg-blue-100 text-blue-400 cursor-not-allowed' 
+                      : 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95'
                 }`}
               >
                 {isAiLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                {isAiLoading ? 'AI 智慧修飾' : 'AI 智慧修飾'}
+                {!hasApiKey ? 'AI 未設定' : isAiLoading ? 'AI 智慧修飾' : 'AI 智慧修飾'}
               </button>
               <button 
                 onClick={() => handleCopy()}
