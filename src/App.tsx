@@ -11,55 +11,61 @@ const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 const METHODS_CONFIG = {
   '早晨反思': {
     subtitle: '晨間覺察',
+    note: '起床後清空大腦，找出今天的寫作主題',
     fields: [
-      { id: 'morning_think', label: '我在想什麼？', placeholder: '捕捉當下腦中的念頭...' },
+      { id: 'morning_think', label: '我在想什麼？腦海中有哪些念頭或畫面？', placeholder: '捕捉當下腦中的念頭...不用完整，片段也可以' },
       { id: 'morning_feel', label: '我感覺如何？', placeholder: '描述目前的情緒狀態...' },
       { id: 'morning_excited', label: '什麼事讓我興奮？', placeholder: '今天最期待的事情是？' }
     ]
   },
   '行事曆挖礦': {
     subtitle: '昨日回顧',
+    note: '從昨天的行程中找出值得記錄的事',
     fields: [
-      { id: 'cal_review', label: '回顧昨日行程', placeholder: '昨天從早到晚做了哪些事？' },
+      { id: 'cal_review', label: '回顧昨日行程', placeholder: '昨天的行程中，哪一件事讓你產生了情緒反應？（開心、驚訝、困擾都算）' },
       { id: 'cal_event', label: '挑出有感事件', placeholder: '哪一件事讓你印象最深刻？' },
-      { id: 'cal_reflect', label: '反思 (情緒/原因/行動)', placeholder: '為什麼有感？當時情緒？下次如何優化？' }
+      { id: 'cal_reflect', label: '反思 (情緒/原因/行動)', placeholder: '為什麼這件事讓你有這種感受？背後的原因是什麼？當時情緒？你採取了什麼行動？或者下次可以怎麼做？' }
     ]
   },
   'ORID': {
     subtitle: '生活有感事件',
+    note: '深度分析一件有感覺的生活事件',
     fields: [
-      { id: 'orid_o', label: '客觀 (Objective)', placeholder: '發生了什麼事實？看到了什麼？' },
-      { id: 'orid_r', label: '反應 (Reflective)', placeholder: '你的心情或直覺反應是什麼？' },
-      { id: 'orid_i', label: '詮釋 (Interpretive)', placeholder: '這件事對你的意義？學到了什麼？' },
+      { id: 'orid_o', label: '客觀 (Objective)', placeholder: '發生了什麼事實？看到了什麼？只描述事實，不加評價' },
+      { id: 'orid_r', label: '反應 (Reflective)', placeholder: '你的心情或直覺反應是什麼？感動、難過、驚訝、困惑都行' },
+      { id: 'orid_i', label: '詮釋 (Interpretive)', placeholder: '這件事對你的意義？它代表了什麼？學到了什麼？' },
       { id: 'orid_d', label: '決定 (Decisional)', placeholder: '下一步具體要做什麼？' }
     ]
   },
   'PAR': {
     subtitle: '專案/任務執行',
+    note: '完成工作任務後，立即記錄始末。梳理任務的因果關係，優化執行邏輯',
     fields: [
-      { id: 'par_p', label: '目的 (Purpose)', placeholder: '你原本想達成什麼目標？' },
-      { id: 'par_a', label: '行動 (Action)', placeholder: '你具體採取了哪些步驟？' },
-      { id: 'par_r', label: '結果 (Result)', placeholder: '最終的產出或影響是什麼？' }
+      { id: 'par_p', label: '目的 (Purpose)', placeholder: '這個任務或專案的目標是什麼？為什麼要做？' },
+      { id: 'par_a', label: '行動 (Action)', placeholder: '你具體採取了哪些行動？過程中做了什麼？' },
+      { id: 'par_r', label: '結果 (Result)', placeholder: '最終的成果是什麼？對你或工作有什麼具體影響？' }
     ]
   },
   'AAR': {
-    subtitle: '今日收穫總結',
+    subtitle: '下班前 5 分鐘今日收穫總結',
+    note: '總結今日經驗，將經歷轉化為能力',
     fields: [
-      { id: 'aar_done', label: '今天完成什麼？', placeholder: '列出今日的主要產出...' },
+      { id: 'aar_done', label: '今天完成什麼？', placeholder: '列出今日的主要1–3件事或產出...' },
       { id: 'aar_feel', label: '有啟發/有感覺的事情？', placeholder: '意外的收穫或觸動...' },
-      { id: 'aar_learn', label: '學到什麼？', placeholder: '總結一條可以帶走的經驗...' }
+      { id: 'aar_learn', label: '學到什麼？', placeholder: '總結一條可以帶走的經驗...學到或觀察到什麼？' }
     ]
   },
   '2分鐘列點': {
-    subtitle: '快速記錄',
+    subtitle: '睡前快速記錄',
+    note: '快速捕捉靈感，不讓體悟流失',
     fields: [
-      { id: 'bullet_do', label: '今天做了什麼？', placeholder: '快速列點描述...' },
-      { id: 'bullet_lesson', label: '反思與教訓', placeholder: '今天最重要的一個體悟...' }
+      { id: 'bullet_do', label: '今天做了什麼？', placeholder: '快速列點描述...流水帳沒關係，越具體越好' },
+      { id: 'bullet_lesson', label: '反思與教訓', placeholder: '今天最重要的一個體悟...或有什麼教訓、收穫或值得記住的洞察？' }
     ]
   }
 };
 
-const ROLES = ['工程師', '產品經理', '創業者', '學習者', '爸爸/媽媽', '未指定'];
+const ROLES = ['健美實踐者', '工程師', '創業者', '學習者', '媽媽', '未指定'];
 const SCENARIOS = ['生活習慣', '學習知識', '工作經驗', '人際溝通'];
 
 export default function App() {
@@ -117,6 +123,7 @@ export default function App() {
       const prompt = `
         你是一位專業的個人成長教練與寫作導航員。
         使用者正在使用「${method}」復盤法進行記錄。
+        我剛完成了一段復盤筆記，請幫我將以下的原始回答整理成一篇結構清晰、語言流暢的「經驗卡片」。
         
         使用者背景：
         - 角色：${role}
@@ -125,10 +132,14 @@ export default function App() {
         原始內容：
         ${contentString}
         
-        請執行以下任務：
-        1. 修飾文字：保持原始結構，但讓文字更通順、專業且具備反思深度。
-        2. 提煉洞察：從內容中找出一個核心體悟。
-        3. 行動建議：根據內容提供 1-2 個具體、可執行的下一步建議。
+        【你的任務】
+        1. 幫我提煉出一個具有「行動感」的標題（格式參考：「我如何…」或「X 件事讓我…」）
+        2. 用 100–300 字，以第一人稱將上述回答整理成一段流暢的敘述，保留我的真實感受與洞察
+        3. 提煉洞察：從內容中找出一個核心體悟。
+        4. 行動建議：根據內容提供 1-2 個具體、可執行的下一步建議。
+        5. 最後用一句話總結「這個經驗對我的人生角色有什麼意義」
+        6. 語氣自然真誠，不要過度美化，像是在跟朋友分享一樣
+        7. 最下方附註我寫的原始內容讓我可以回憶我寫作的過程
         
         請用繁體中文回答，並使用 Markdown 格式，讓排版美觀。
       `;
@@ -168,6 +179,41 @@ export default function App() {
   };
 
   const currentFields = useMemo(() => METHODS_CONFIG[method as keyof typeof METHODS_CONFIG].fields, [method]);
+
+  // 即時生成 Prompt 內容
+  const generatedPrompt = useMemo(() => {
+    const config = METHODS_CONFIG[method as keyof typeof METHODS_CONFIG];
+    let contentString = "";
+    config.fields.forEach(f => {
+      contentString += `${f.label}: ${inputs[f.id] || "(尚未填寫)"}\n`;
+    });
+
+    return `你是一位專業的個人成長教練與寫作導航員。
+使用者正在使用「${method}」復盤法進行記錄。
+
+使用者背景：
+- 角色：${role}
+- 場景：${scenario}
+
+原始內容：
+${contentString}
+
+請執行以下任務：
+1. 修飾文字：保持原始結構，但讓文字更通順、專業且具備反思深度。
+2. 提煉洞察：從內容中找出一個核心體悟。
+3. 行動建議：根據內容提供 1-2 個具體、可執行的下一步建議。
+
+請用繁體中文回答，並使用 Markdown 格式，讓排版美觀。`;
+  }, [method, role, scenario, inputs]);
+
+  // 複製 Prompt 功能
+  const [promptCopied, setPromptCopied] = useState(false);
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(generatedPrompt).then(() => {
+      setPromptCopied(true);
+      setTimeout(() => setPromptCopied(false), 2000);
+    });
+  };
 
   return (
     <div className="flex h-screen bg-white text-[#37352f] overflow-hidden font-sans">
@@ -255,10 +301,18 @@ export default function App() {
 
         {/* 第三步：引導提問表單 */}
         <section className="mb-20">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">3</div>
             <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400">引導提問</h2>
           </div>
+          
+          {/* 動態指引區塊 */}
+          <div className="mb-6 py-1">
+            <p className="text-xs text-gray-400 font-medium italic">
+              💡 指引：{METHODS_CONFIG[method as keyof typeof METHODS_CONFIG].note}
+            </p>
+          </div>
+
           <div className="space-y-6">
             {currentFields.map(field => (
               <div key={field.id} className="group">
@@ -296,7 +350,7 @@ export default function App() {
                 }`}
               >
                 {isAiLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                {isAiLoading ? 'AI 正在思考...' : 'AI 智慧修飾'}
+                {isAiLoading ? 'AI 智慧修飾' : 'AI 智慧修飾'}
               </button>
               <button 
                 onClick={() => handleCopy()}
@@ -309,6 +363,32 @@ export default function App() {
                 {copied ? <Check size={16} /> : <Copy size={16} />}
                 {copied ? '已複製' : '複製全文'}
               </button>
+            </div>
+          </div>
+
+          {/* Prompt 預覽區 (新功能) */}
+          <div className="mb-8">
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 overflow-hidden">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <BookOpen size={16} />
+                  <span className="text-xs font-bold uppercase tracking-wider">Prompt 預覽 (可複製到其他 AI)</span>
+                </div>
+                <button 
+                  onClick={handleCopyPrompt}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[10px] font-bold transition-all ${
+                    promptCopied ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  {promptCopied ? <Check size={12} /> : <Copy size={12} />}
+                  {promptCopied ? '已複製 Prompt' : '複製 Prompt'}
+                </button>
+              </div>
+              <div className="bg-white border border-gray-100 rounded-lg p-4 max-h-[150px] overflow-y-auto">
+                <pre className="text-[11px] text-gray-500 whitespace-pre-wrap font-mono leading-relaxed">
+                  {generatedPrompt}
+                </pre>
+              </div>
             </div>
           </div>
 
