@@ -65,7 +65,7 @@ const METHODS_CONFIG = {
   }
 };
 
-const ROLES = ['健美實踐者', '工程師', '創業者', '學習者', '媽媽', '未指定'];
+const ROLES = ['創作者', '溫柔優雅健美女子', '工程師', '創業者', '學習者', '媽媽', '未指定'];
 const SCENARIOS = ['生活習慣', '學習知識', '工作經驗', '人際溝通'];
 
 export default function App() {
